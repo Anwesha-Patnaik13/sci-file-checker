@@ -24,3 +24,11 @@ chmod +x check_files.sh
 
 ## Skills shown
 Bash loops, conditions, grep, case, exit codes, Git/GitHub.
+## Tested on
+My own NWChem project (`nwchem-qa/runs`): 13 output files.
+
+```
+Passed: 12   Failed: 1
+```
+
+The one FAIL was `bad_water.out`, a deliberately broken calculation. The checker caught it correctly.
