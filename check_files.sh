@@ -10,7 +10,7 @@ fail=0
 printf "%-30s %-6s %s\n" "FILE" "RESULT" "REASON" | tee "$report"
 echo "------------------------------------------------------" | tee -a "$report"
 
-for file in "$folder"/*; do
+for file in "$folder"/*.out "$folder"/*.log "$folder"/*.pdbqt "$folder"/*.csv; do
     [ -f "$file" ] || continue          # skip anything that is not a file
     name=$(basename "$file")
     [ "$name" = "$report" ] && continue # skip our own report
