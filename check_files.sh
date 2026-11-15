@@ -7,7 +7,6 @@ report="report.txt"         # report file we save
 pass=0
 fail=0
 
-printf "%-30s %-6s %s\n" "FILE" "RESULT" "REASON" | tee "$report"
 echo "------------------------------------------------------" | tee -a "$report"
 
 for file in "$folder"/*.out "$folder"/*.log "$folder"/*.pdbqt "$folder"/*.csv; do
@@ -33,10 +32,11 @@ for file in "$folder"/*.out "$folder"/*.log "$folder"/*.pdbqt "$folder"/*.csv; d
             *.csv)    [ "$(wc -l < "$file")" -ge 2 ]     || reason="CSV has no data rows" ;;
         esac
     fi
-
-    # Print result
+    energy=""
+    [[ "$name" == *.out ]] && energy=$(grep "Total DFT energy" "$file" | tail -1 | awk '{print $NF}')
+        # Print result
     if [ -z "$reason" ]; then
-        printf "%-30s %-6s\n" "$name" "PASS" | tee -a "$report"
+        printf "%-30s %-6s %s\n" "$name" "PASS" "$energy" | tee -a "$report"
         pass=$((pass + 1))
     else
         printf "%-30s %-6s %s\n" "$name" "FAIL" "$reason" | tee -a "$report"
